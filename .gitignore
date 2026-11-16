@@ -1,0 +1,36 @@
+# Dependencias
+node_modules/
+
+# Builds
+.next/
+dist/
+build/
+out/
+
+# Caches
+*.tsbuildinfo
+.eslintcache
+
+# Tests
+coverage/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Logs y temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.tmp/
+.temp/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
