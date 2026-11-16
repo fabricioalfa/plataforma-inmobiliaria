@@ -64,37 +64,17 @@ export default function LoginForm({
       animate="visible"
       className="w-full"
     >
-      <div className="rounded-[28px] border border-white/70 bg-white/95 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-7">
+      <div className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-[0_24px_70px_rgba(41,37,36,0.14)] sm:p-7">
         <motion.div variants={item} className="mb-5">
-          <div className="mb-4 flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-lg shadow-emerald-600/25">
-              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
-                <path
-                  d="M3 11.5 12 4l9 7.5"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M5.5 10.5V20h13v-9.5M10 20v-5h4v5"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span className="text-sm font-semibold tracking-tight text-zinc-700">
-              Plataforma Inmobiliaria
-            </span>
-          </div>
-
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-emerald-800">
+            <span className="h-1 w-1 rounded-full bg-emerald-500" />
+            Acceso a tu cuenta
+          </span>
+          <h1 className="text-2xl font-bold tracking-tight text-stone-900">
             Bienvenido de vuelta
           </h1>
-          <p className="mt-1 text-sm leading-6 text-zinc-500">
-            La luz está encendida. Ingresa tus datos para entrar a tu cuenta.
+          <p className="mt-1.5 text-sm leading-6 text-stone-500">
+            La luz está encendida. Ingresa tus datos para continuar.
           </p>
         </motion.div>
 
@@ -221,7 +201,7 @@ export default function LoginForm({
               className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
                 authStatus === 'success'
                   ? 'bg-emerald-600 shadow-emerald-600/25'
-                  : 'bg-zinc-900 shadow-zinc-900/10 hover:bg-zinc-800'
+                  : 'bg-emerald-900 shadow-emerald-900/15 hover:bg-emerald-800'
               }`}
             >
               {authStatus === 'loading' ? (
