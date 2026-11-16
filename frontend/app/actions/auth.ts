@@ -28,29 +28,53 @@ async function setTokenCookie(token: string) {
   });
 }
 
-export async function login(_prev: { error?: string } | void, formData: FormData) {
-  const parsed = LoginSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
+type LoginInput = {
+  email: string;
+  password: string;
+};
+
+type LoginResult = { ok: true } | { ok: false; error: string };
+
+export async function login(input: LoginInput): Promise<LoginResult> {
+  const parsed = LoginSchema.safeParse(input);
 
   if (!parsed.success) {
-    return { error: 'Datos inválidos' };
+    return { ok: false, error: 'Ingresa un correo válido y una clave de al menos 6 caracteres.' };
   }
 
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(parsed.data),
-  });
+  try {
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(parsed.data),
+    });
 
-  if (!res.ok) {
-    return { error: 'Credenciales inválidas' };
+    if (!res.ok) {
+      const body = (await res.json().catch(() => null)) as
+        | { message?: string | string[] }
+        | null;
+      const apiMessage = Array.isArray(body?.message) ? body.message[0] : body?.message;
+
+      return {
+        ok: false,
+        error:
+          res.status === 401
+            ? 'Correo o contraseña incorrectos.'
+            : (apiMessage ?? 'No se pudo iniciar sesión.'),
+      };
+    }
+
+    const { access_token } = (await res.json()) as { access_token?: string };
+
+    if (!access_token) {
+      return { ok: false, error: 'El servidor devolvió una respuesta inválida.' };
+    }
+
+    await setTokenCookie(access_token);
+    return { ok: true };
+  } catch {
+    return { ok: false, error: 'No se pudo conectar con el servidor. Intenta de nuevo.' };
   }
-
-  const { access_token } = (await res.json()) as { access_token: string };
-  await setTokenCookie(access_token);
-  redirect('/dashboard');
 }
 
 export async function register(_prev: { error?: string }, formData: FormData) {
